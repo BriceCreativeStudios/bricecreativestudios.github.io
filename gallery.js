@@ -2,7 +2,7 @@
 (() => {
   const links = [...document.querySelectorAll('[data-shot]')];
   if (!links.length) return;
-  const shots = links.map(a => ({src: a.getAttribute('href'), alt: a.querySelector('img').alt}));
+  const shots = links.map(a => ({src: a.getAttribute('href'), alt: a.querySelector('img').alt, caption: a.dataset.caption || a.querySelector('img').alt}));
   const image = document.getElementById('gallery-image');
   const open = document.getElementById('gallery-open');
   const dialog = document.getElementById('screenshot-dialog');
@@ -13,7 +13,7 @@
     const shot = shots[index];
     image.src = shot.src; image.alt = shot.alt; open.href = shot.src;
     enlarged.src = shot.src; enlarged.alt = shot.alt;
-    const caption = `${index + 1} / ${shots.length} — ${shot.alt}`;
+    const caption = `${index + 1} / ${shots.length} — ${shot.caption}`;
     document.getElementById('gallery-caption').textContent = caption;
     document.getElementById('dialog-caption').textContent = caption;
     links.forEach((a, i) => { if (i === index) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
